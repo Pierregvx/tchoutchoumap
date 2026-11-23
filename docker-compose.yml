@@ -1,0 +1,29 @@
+# tchoutchoumap: serves the page and rebuilds the links every week (app/collect.py, Transitous). See README.md.
+services:
+  trains:
+    image: python:3-alpine
+    container_name: trains
+    restart: unless-stopped
+    user: "1000:100"
+    command: ["python3", "-B", "-I", "/app/serve.py"]
+    environment:
+      - TZ=Europe/Paris
+      - PORT=8791
+      - WEB=/web
+      - TRAINS_DATA=/data
+    volumes:
+      - ./app:/app:ro
+      - ./web:/web:ro
+      - ./data:/data
+    ports:
+      - 8791:8791/tcp   # the page and its data: nothing private
+    mem_limit: 384m
+    cpus: 0.5
+    logging:
+      driver: json-file
+      options: {max-size: "1m", max-file: "2"}
+    healthcheck:
+      test: wget -q --spider http://127.0.0.1:8791/health || exit 1
+      interval: 5m
+      timeout: 5s
+      start_period: 20s

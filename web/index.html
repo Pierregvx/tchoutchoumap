@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tchoutchoumap</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚆</text></svg>">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map"></div>
+<div id="chips" data-t-title="Transport shown"></div>
+<aside id="panel">
+  <div id="grip" data-t-title="Bigger / smaller"></div>
+  <header>
+    <h1>🚆 tchoutchoumap</h1>
+    <nav>
+      <button data-tab="explore" data-t="Map">Map</button>
+      <button data-tab="trip" class="on" data-t="My trip">My trip</button>
+      <button data-tab="settings" data-t="Settings">Settings</button>
+    </nav>
+  </header>
+
+  <section id="tab-trip">
+    <div class="add">
+      <input id="add-city" list="city-list" data-t-ph="Add a city to the trip" autocomplete="off">
+      <datalist id="city-list"></datalist>
+    </div>
+    <ol id="stops"></ol>
+    <div id="next"></div>
+    <div class="row-buttons" id="trip-actions">
+      <button id="optimize" data-t="Best order" data-t-title="Keeps the start and the end, and finds the fastest order for the cities in between">Best order</button>
+      <button id="reverse" data-t="Reverse">Reverse</button>
+      <button id="clear" data-t="Clear">Clear</button>
+    </div>
+    <div id="total"></div>
+    <div id="legs"></div>
+    <p class="hint" id="trip-hint" data-t="Add your starting city, then the ones you want to pass through (here, or from the Map). Between two cities: the direct train and how many a day, or the shortest way with its changes."></p>
+  </section>
+
+  <section id="tab-explore" hidden>
+    <div class="add">
+      <input id="explore-city" list="city-list" data-t-ph="A city (or tap the map)" autocomplete="off">
+    </div>
+    <div id="explore"></div>
+  </section>
+
+  <section id="tab-settings" hidden>
+    <h3 data-t="Transport">Transport</h3>
+    <div id="modes"></div>
+    <h3 data-t="Changes">Changes</h3>
+    <label><span data-t="Minimum time to change trains"></span>
+      <select id="transfer"><option>15</option><option>30</option><option selected>45</option><option>60</option><option>90</option></select> min</label>
+    <label><input type="checkbox" id="show-net" checked> <span data-t="Show every direct link on the map"></span></label>
+    <h3 data-t="The data">The data</h3>
+    <p id="about"></p>
+  </section>
+</aside>
+<script src="vendor/leaflet.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
